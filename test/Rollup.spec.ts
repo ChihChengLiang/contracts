@@ -340,10 +340,17 @@ contract("Rollup", async function (accounts) {
     console.log("compressedTx: " + JSON.stringify(compressedTxs));
     console.log("result", result);
 
+    // Valid batch looks like this
     // submit batch for that transactions
     await rollupCoreInstance.submitBatch(
       compressedTxs,
       "0xb6b4b5c6cb43071b3913b1d500b33c52392f7aa85f8a451448e20c3967f2b21a"
+    );
+
+    // Send a batch that's invalid. How do you fraud proof this?
+    await rollupCoreInstance.submitBatch(
+      ["0xabc", "0xabc"], // Invalid 2 txs bytes
+      "0xabcd" // Invalid updated Txroot
     );
   });
 });
